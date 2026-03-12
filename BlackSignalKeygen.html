@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BlackSignal Keygen</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>BlackSignal — License Keygen</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -18,50 +18,234 @@
     --accent3: #bf5fff;
     --text: #e8eaf0;
     --muted: #6b7280;
+    --danger: #ff4466;
   }
+
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #bgCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  /* ── PASSWORD GATE ── */
+  #passwordGate {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(6,8,16,0.98);
+    backdrop-filter: blur(24px);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
   }
 
-  .container {
+  .gate-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 3rem;
+    max-width: 460px;
+    width: 90%;
+    text-align: center;
+    backdrop-filter: blur(30px);
+    animation: fadeUp 0.4s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .gate-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.75rem;
+  }
+
+  .gate-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+  .gate-card h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
+  }
+
+  .gate-card p {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .gate-input {
     width: 100%;
-    max-width: 680px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
   }
 
-  .header {
+  .gate-input:focus { border-color: rgba(0,255,136,0.4); }
+  .gate-input::placeholder { color: var(--muted); letter-spacing: 0; }
+
+  .gate-error {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--danger);
+    min-height: 1.1rem;
+    margin-bottom: 0.75rem;
+    text-align: left;
+  }
+
+  .gate-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 24px rgba(0,255,136,0.15);
+    letter-spacing: 0.05em;
+  }
+
+  .gate-btn:hover {
+    box-shadow: 0 0 36px rgba(0,255,136,0.3);
+    transform: translateY(-1px);
+  }
+
+  .gate-attempts {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 1.25rem;
+  }
+
+  .gate-attempts span { color: var(--danger); }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    background: rgba(6,8,16,0.8);
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-right { display: flex; gap: 0.75rem; align-items: center; }
+
+  .nav-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.45rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .nav-btn:hover {
+    background: var(--surface2);
+    color: var(--text);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .nav-admin-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(191,95,255,0.1);
+    color: var(--accent3);
+    border: 1px solid rgba(191,95,255,0.25);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  .page-header {
     text-align: center;
     margin-bottom: 3rem;
   }
 
-  .logo {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
-  }
-
-  h1 {
-    font-size: 2.2rem;
+  .page-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 800;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
 
-  .subtitle {
+  .page-header h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-header p {
     color: var(--muted);
     font-size: 0.9rem;
+    line-height: 1.7;
   }
 
+  /* ── CARD ── */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -71,59 +255,31 @@
     margin-bottom: 1.5rem;
   }
 
-  .form-group {
+  .card-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
     margin-bottom: 1.5rem;
   }
 
-  label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.6rem;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  input, select {
-    width: 100%;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.85rem 1rem;
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-    appearance: none;
-  }
-
-  input:focus, select:focus {
-    border-color: rgba(0,255,136,0.4);
-  }
-
-  select option {
-    background: #0e1117;
-    color: var(--text);
-  }
-
-  .tier-selector {
+  /* ── TIER SELECTOR ── */
+  .tier-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
   .tier-btn {
-    padding: 1rem;
+    padding: 1.1rem 0.75rem;
     border-radius: 12px;
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--muted);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
     cursor: pointer;
     text-align: center;
@@ -131,45 +287,80 @@
     letter-spacing: 0.05em;
   }
 
-  .tier-btn:hover {
-    background: var(--surface2);
-    color: var(--text);
-  }
+  .tier-btn .tier-icon { font-size: 1.3rem; display: block; margin-bottom: 0.4rem; }
+  .tier-btn .tier-price { font-size: 0.65rem; color: var(--muted); margin-top: 0.3rem; font-weight: 400; }
+
+  .tier-btn:hover { background: var(--surface2); color: var(--text); }
 
   .tier-btn.active-free {
     border-color: rgba(0,207,255,0.5);
-    background: rgba(0,207,255,0.08);
+    background: rgba(0,207,255,0.06);
     color: var(--accent2);
   }
+  .tier-btn.active-free .tier-price { color: var(--accent2); opacity: 0.7; }
 
   .tier-btn.active-pro {
     border-color: rgba(0,255,136,0.5);
-    background: rgba(0,255,136,0.08);
+    background: rgba(0,255,136,0.06);
     color: var(--accent);
   }
+  .tier-btn.active-pro .tier-price { color: var(--accent); opacity: 0.7; }
 
   .tier-btn.active-enterprise {
     border-color: rgba(191,95,255,0.5);
-    background: rgba(191,95,255,0.08);
+    background: rgba(191,95,255,0.06);
     color: var(--accent3);
   }
+  .tier-btn.active-enterprise .tier-price { color: var(--accent3); opacity: 0.7; }
 
+  /* ── TIER DETAIL ── */
   .tier-detail {
     display: none;
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.02);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     font-size: 0.82rem;
     color: var(--muted);
     line-height: 1.7;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .tier-detail.visible { display: block; }
-
   .tier-detail strong { color: var(--text); }
 
+  /* ── FORM ── */
+  .form-group { margin-bottom: 1.25rem; }
+
+  .form-label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus { border-color: rgba(0,255,136,0.35); }
+  .form-input::placeholder { color: var(--muted); }
+  .form-input:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ── GENERATE BTN ── */
   .generate-btn {
     width: 100%;
     padding: 1rem;
@@ -178,26 +369,28 @@
     border-radius: 10px;
     color: #000;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
     letter-spacing: 0.05em;
-    box-shadow: 0 0 25px rgba(0,255,136,0.2);
+    box-shadow: 0 0 24px rgba(0,255,136,0.15);
+    margin-top: 0.5rem;
   }
 
   .generate-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(0,255,136,0.35);
+    box-shadow: 0 0 40px rgba(0,255,136,0.3);
   }
 
   .generate-btn:disabled {
-    opacity: 0.4;
+    opacity: 0.35;
     cursor: not-allowed;
     transform: none;
+    box-shadow: none;
   }
 
-  /* OUTPUT */
+  /* ── OUTPUT ── */
   .output-card {
     display: none;
     background: var(--surface);
@@ -205,58 +398,43 @@
     border-radius: 20px;
     padding: 2.5rem;
     backdrop-filter: blur(20px);
-    animation: fadeIn 0.4s ease;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.35s ease;
   }
 
   .output-card.visible { display: block; }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .output-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
-
-  .key-display {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(0,255,136,0.2);
-    border-radius: 10px;
-    padding: 1.25rem 1.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    color: var(--accent);
-    letter-spacing: 0.08em;
-    word-break: break-all;
+  .key-block {
+    background: rgba(0,0,0,0.5);
+    border-radius: 12px;
+    padding: 1.5rem;
     margin-bottom: 1.5rem;
     position: relative;
+    border: 1px solid rgba(0,255,136,0.15);
   }
 
-  .key-display.enterprise {
-    color: var(--accent3);
-    border-color: rgba(191,95,255,0.25);
+  .key-block.tier-free  { border-color: rgba(0,207,255,0.2); }
+  .key-block.tier-pro   { border-color: rgba(0,255,136,0.2); }
+  .key-block.tier-enterprise { border-color: rgba(191,95,255,0.2); }
+
+  .key-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    word-break: break-all;
+    line-height: 1.5;
   }
 
-  .key-display.pro {
-    color: var(--accent);
-    border-color: rgba(0,255,136,0.25);
-  }
+  .key-text.tier-free       { color: var(--accent2); }
+  .key-text.tier-pro        { color: var(--accent); }
+  .key-text.tier-enterprise { color: var(--accent3); }
 
-  .key-display.free {
-    color: var(--accent2);
-    border-color: rgba(0,207,255,0.25);
-  }
-
+  /* ── META GRID ── */
   .meta-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.75rem;
     margin-bottom: 1.5rem;
   }
 
@@ -264,33 +442,32 @@
     background: rgba(255,255,255,0.03);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 1rem;
+    padding: 0.9rem 1rem;
   }
 
-  .meta-item-label {
+  .meta-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     color: var(--muted);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
   }
 
-  .meta-item-value {
+  .meta-value {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--text);
     font-weight: 600;
   }
 
-  .meta-item-value.never {
-    color: var(--accent3);
-  }
+  .meta-value.never  { color: var(--accent3); }
+  .meta-value.expiry { color: var(--accent2); }
+  .meta-value.free   { color: var(--accent2); }
+  .meta-value.pro    { color: var(--accent); }
+  .meta-value.enterprise { color: var(--accent3); }
 
-  .meta-item-value.expires {
-    color: var(--accent2);
-  }
-
+  /* ── COPY BTN ── */
   .copy-btn {
     width: 100%;
     padding: 0.85rem;
@@ -303,24 +480,13 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
   }
 
-  .copy-btn:hover {
-    background: var(--surface2);
-    border-color: rgba(255,255,255,0.15);
-  }
+  .copy-btn:hover { background: var(--surface2); border-color: rgba(255,255,255,0.15); }
+  .copy-btn.copied { border-color: rgba(0,255,136,0.4); color: var(--accent); }
 
-  .copy-btn.copied {
-    border-color: rgba(0,255,136,0.4);
-    color: var(--accent);
-  }
-
-  /* KEY LOG */
-  .log-section {
-    margin-top: 1.5rem;
-  }
-
+  /* ── LOG ── */
   .log-header {
     display: flex;
     justify-content: space-between;
@@ -330,9 +496,9 @@
 
   .log-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--muted);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
@@ -346,156 +512,332 @@
     transition: color 0.2s;
   }
 
-  .log-clear:hover { color: #ff4466; }
+  .log-clear:hover { color: var(--danger); }
 
   .log-list {
     list-style: none;
-    max-height: 220px;
+    max-height: 260px;
     overflow-y: auto;
   }
 
-  .log-list::-webkit-scrollbar { width: 4px; }
+  .log-list::-webkit-scrollbar { width: 3px; }
   .log-list::-webkit-scrollbar-track { background: transparent; }
-  .log-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  .log-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
 
   .log-item {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
     align-items: center;
-    padding: 0.7rem 0;
+    gap: 0.75rem;
+    padding: 0.65rem 0;
     border-bottom: 1px solid var(--border);
-    gap: 1rem;
   }
 
   .log-item:last-child { border-bottom: none; }
 
   .log-key {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: var(--muted);
-    flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
+  .log-customer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    white-space: nowrap;
+    opacity: 0.7;
+  }
+
   .log-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    padding: 0.2rem 0.6rem;
+    font-size: 0.58rem;
+    padding: 0.2rem 0.55rem;
     border-radius: 999px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     white-space: nowrap;
     flex-shrink: 0;
   }
 
-  .badge-free { background: rgba(0,207,255,0.1); color: var(--accent2); border: 1px solid rgba(0,207,255,0.2); }
-  .badge-pro { background: rgba(0,255,136,0.1); color: var(--accent); border: 1px solid rgba(0,255,136,0.2); }
+  .badge-free       { background: rgba(0,207,255,0.1); color: var(--accent2); border: 1px solid rgba(0,207,255,0.2); }
+  .badge-pro        { background: rgba(0,255,136,0.1); color: var(--accent);  border: 1px solid rgba(0,255,136,0.2); }
   .badge-enterprise { background: rgba(191,95,255,0.1); color: var(--accent3); border: 1px solid rgba(191,95,255,0.2); }
 
-  .empty-log {
+  .log-empty {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
     color: var(--muted);
     text-align: center;
-    padding: 1.5rem 0;
+    padding: 2rem 0;
+    opacity: 0.5;
+  }
+
+  /* ── LOCK SCREEN OVERLAY (after too many attempts) ── */
+  #lockScreen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(6,8,16,0.99);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  #lockScreen.visible { display: flex; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0.85rem 1.25rem; }
+    .page { padding: 2rem 1.25rem 4rem; }
+    .card, .output-card { padding: 1.75rem 1.25rem; }
+    .tier-grid { grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
+    .meta-grid { grid-template-columns: 1fr 1fr; }
+    .license-gate-card { padding: 2rem 1.25rem; }
   }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="header">
-    <div class="logo">⬡ BLACKSIGNAL</div>
-    <h1>License Keygen</h1>
-    <p class="subtitle">Generate cryptographic license keys for each pricing tier.</p>
+<canvas id="bgCanvas"></canvas>
+
+<!-- ══════════════════════════════════════════
+     PASSWORD GATE
+════════════════════════════════════════════ -->
+<div id="passwordGate">
+  <div class="gate-card">
+    <div class="gate-logo">⬡ BLACKSIGNAL</div>
+    <div class="gate-icon">🔐</div>
+    <h2>Admin Access Only</h2>
+    <p>This tool is restricted to administrators. Enter the admin password to access the license keygen.</p>
+    <input
+      class="gate-input"
+      id="gateInput"
+      type="password"
+      placeholder="Enter admin password..."
+      autocomplete="off"
+    />
+    <div class="gate-error" id="gateError"></div>
+    <button class="gate-btn" onclick="checkPassword()">Unlock Keygen →</button>
+    <div class="gate-attempts" id="gateAttempts"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     LOCK SCREEN (too many attempts)
+════════════════════════════════════════════ -->
+<div id="lockScreen">
+  <div style="font-size:3rem;">🚫</div>
+  <div style="font-size:1.2rem;font-weight:800;color:#ff4466;">Access Locked</div>
+  <div style="color:#6b7280;font-size:0.82rem;max-width:320px;line-height:1.7;">
+    Too many failed attempts. This session has been locked.<br>Close and reopen the page to try again.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     NAV
+════════════════════════════════════════════ -->
+<nav>
+  <a class="nav-logo" href="BlackSignalHub.html">⬡ BLACKSIGNAL</a>
+  <div class="nav-right">
+    <span class="nav-admin-badge">⬡ ADMIN</span>
+    <a class="nav-btn" href="BlackSignalHub.html">← Hub</a>
+    <button class="nav-btn" onclick="lockSession()" title="Lock keygen">🔒 Lock</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PAGE
+════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <h1>License <span>Keygen</span></h1>
+    <p>Generate cryptographic license keys for Free, Pro, and Enterprise tiers.</p>
   </div>
 
+  <!-- GENERATOR CARD -->
   <div class="card">
+    <div class="card-title">// 01 — Select Tier</div>
+    <div class="tier-grid">
+      <button class="tier-btn" id="btn-free" onclick="selectTier('free')">
+        <span class="tier-icon">🔵</span>
+        FREE
+        <div class="tier-price">Get Started</div>
+      </button>
+      <button class="tier-btn" id="btn-pro" onclick="selectTier('pro')">
+        <span class="tier-icon">🟢</span>
+        PRO
+        <div class="tier-price">$29 / mo</div>
+      </button>
+      <button class="tier-btn" id="btn-enterprise" onclick="selectTier('enterprise')">
+        <span class="tier-icon">🟣</span>
+        ENTERPRISE
+        <div class="tier-price">Contact Us</div>
+      </button>
+    </div>
+
+    <div class="tier-detail" id="detail-free">
+      <strong>Free Tier</strong> — Includes Email Intelligence, Phone Lookup, Password Auditor, and IP Intelligence. License valid for <strong>32 days</strong> from generation date. Ideal for evaluation.
+    </div>
+    <div class="tier-detail" id="detail-pro">
+      <strong>Pro Tier</strong> — All 20 tools unlocked. License valid for <strong>32 days</strong>, auto-renews with active subscription at <strong>$29/mo</strong>. Priority support included.
+    </div>
+    <div class="tier-detail" id="detail-enterprise">
+      <strong>Enterprise Tier</strong> — All 20 tools + API access + multi-seat deployment. License <strong>never expires</strong>. Perpetual key tied to organization. Dedicated support.
+    </div>
+
+    <div class="card-title" style="margin-top:0.5rem;">// 02 — Customer Details</div>
+
     <div class="form-group">
-      <label>// Select Tier</label>
-      <div class="tier-selector">
-        <button class="tier-btn" id="btn-free" onclick="selectTier('free')">FREE</button>
-        <button class="tier-btn" id="btn-pro" onclick="selectTier('pro')">PRO</button>
-        <button class="tier-btn" id="btn-enterprise" onclick="selectTier('enterprise')">ENTERPRISE</button>
-      </div>
-      <div class="tier-detail" id="detail-free">
-        <strong>Free Tier</strong> — 8 core tools. License valid for <strong>32 days</strong> from generation. Ideal for evaluation and onboarding.
-      </div>
-      <div class="tier-detail" id="detail-pro">
-        <strong>Pro Tier</strong> — All 20 tools unlocked. License valid for <strong>32 days</strong>, auto-renews with active subscription at <strong>$29/mo</strong>.
-      </div>
-      <div class="tier-detail" id="detail-enterprise">
-        <strong>Enterprise Tier</strong> — All 20 tools + API access. License <strong>never expires</strong>. Perpetual key tied to organization identifier.
-      </div>
+      <label class="form-label">Customer / Organization Name</label>
+      <input class="form-input" id="customerName" type="text" placeholder="e.g. John Doe or Acme Corp" />
     </div>
 
     <div class="form-group">
-      <label>// Customer / Org Name</label>
-      <input type="text" id="customerName" placeholder="e.g. John Doe or Acme Corp" />
+      <label class="form-label">Email Address (optional)</label>
+      <input class="form-input" id="customerEmail" type="email" placeholder="e.g. john@acmecorp.com" />
     </div>
 
     <div class="form-group">
-      <label>// Seat Count (Enterprise Only)</label>
-      <input type="number" id="seatCount" placeholder="1" min="1" max="9999" value="1" />
+      <label class="form-label">Seat Count <span style="opacity:0.5;">(Enterprise only)</span></label>
+      <input class="form-input" id="seatCount" type="number" placeholder="1" min="1" max="9999" value="1" disabled />
     </div>
 
     <button class="generate-btn" id="generateBtn" onclick="generateKey()" disabled>
-      SELECT A TIER TO GENERATE
+      SELECT A TIER TO CONTINUE
     </button>
   </div>
 
-  <!-- OUTPUT -->
+  <!-- OUTPUT CARD -->
   <div class="output-card" id="outputCard">
-    <div class="output-label">// Generated License Key</div>
-    <div class="key-display" id="keyDisplay"></div>
+    <div class="card-title">// Generated License Key</div>
+
+    <div class="key-block" id="keyBlock">
+      <div class="key-text" id="keyText"></div>
+    </div>
 
     <div class="meta-grid">
       <div class="meta-item">
-        <div class="meta-item-label">Tier</div>
-        <div class="meta-item-value" id="metaTier">—</div>
+        <div class="meta-label">Tier</div>
+        <div class="meta-value" id="metaTier">—</div>
       </div>
       <div class="meta-item">
-        <div class="meta-item-label">Customer</div>
-        <div class="meta-item-value" id="metaCustomer">—</div>
+        <div class="meta-label">Customer</div>
+        <div class="meta-value" id="metaCustomer">—</div>
       </div>
       <div class="meta-item">
-        <div class="meta-item-label">Issue Date</div>
-        <div class="meta-item-value" id="metaIssued">—</div>
+        <div class="meta-label">Issued</div>
+        <div class="meta-value" id="metaIssued">—</div>
       </div>
       <div class="meta-item">
-        <div class="meta-item-label">Expiry</div>
-        <div class="meta-item-value" id="metaExpiry">—</div>
+        <div class="meta-label">Expires</div>
+        <div class="meta-value" id="metaExpiry">—</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Seats</div>
+        <div class="meta-value" id="metaSeats">—</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Email</div>
+        <div class="meta-value" id="metaEmail" style="font-size:0.72rem;">—</div>
       </div>
     </div>
 
     <button class="copy-btn" id="copyBtn" onclick="copyKey()">⬡ Copy License Key</button>
-
-    <!-- LOG -->
-    <div class="log-section">
-      <div class="log-header">
-        <div class="log-title">// Key Log</div>
-        <button class="log-clear" onclick="clearLog()">clear log</button>
-      </div>
-      <ul class="log-list" id="logList">
-        <li class="empty-log">No keys generated yet.</li>
-      </ul>
-    </div>
   </div>
+
+  <!-- KEY LOG CARD -->
+  <div class="card">
+    <div class="log-header">
+      <div class="log-title">// Session Key Log</div>
+      <button class="log-clear" onclick="clearLog()">clear log</button>
+    </div>
+    <ul class="log-list" id="logList">
+      <li class="log-empty">No keys generated this session.</li>
+    </ul>
+  </div>
+
 </div>
 
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════ -->
 <script>
+  // ─────────────────────────────────────────
+  // ADMIN PASSWORD — change this
+  // ─────────────────────────────────────────
+  const ADMIN_PASSWORD = 'BlackSignal2025!';
+  const MAX_ATTEMPTS = 5;
+
+  let attempts = 0;
   let selectedTier = null;
   let lastKey = '';
-  const log = [];
+  const sessionLog = [];
 
+  // ─── PASSWORD GATE ────────────────────────
+  function checkPassword() {
+    const input = document.getElementById('gateInput').value;
+    const errorEl = document.getElementById('gateError');
+    const attemptsEl = document.getElementById('gateAttempts');
+
+    if (input === ADMIN_PASSWORD) {
+      sessionStorage.setItem('bs_admin_auth', 'true');
+      document.getElementById('passwordGate').style.display = 'none';
+      document.getElementById('gateInput').value = '';
+    } else {
+      attempts++;
+      const remaining = MAX_ATTEMPTS - attempts;
+
+      if (attempts >= MAX_ATTEMPTS) {
+        document.getElementById('passwordGate').style.display = 'none';
+        document.getElementById('lockScreen').classList.add('visible');
+        return;
+      }
+
+      errorEl.textContent = '// incorrect password — try again';
+      attemptsEl.innerHTML = `<span>${remaining}</span> attempt${remaining === 1 ? '' : 's'} remaining`;
+      document.getElementById('gateInput').value = '';
+      document.getElementById('gateInput').focus();
+    }
+  }
+
+  function lockSession() {
+    sessionStorage.removeItem('bs_admin_auth');
+    document.getElementById('passwordGate').style.display = 'flex';
+    document.getElementById('gateInput').value = '';
+    document.getElementById('gateError').textContent = '';
+    document.getElementById('gateAttempts').textContent = '';
+    attempts = 0;
+  }
+
+  // Enter key support
+  document.getElementById('gateInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') checkPassword();
+  });
+
+  // Check session on load
+  window.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('bs_admin_auth') === 'true') {
+      document.getElementById('passwordGate').style.display = 'none';
+    }
+  });
+
+  // ─── TIER SELECTION ───────────────────────
   function selectTier(tier) {
     selectedTier = tier;
+
     ['free','pro','enterprise'].forEach(t => {
       document.getElementById('btn-' + t).className = 'tier-btn';
       document.getElementById('detail-' + t).className = 'tier-detail';
     });
+
     document.getElementById('btn-' + tier).className = `tier-btn active-${tier}`;
     document.getElementById('detail-' + tier).className = 'tier-detail visible';
 
@@ -505,28 +847,24 @@
 
     const btn = document.getElementById('generateBtn');
     btn.disabled = false;
-    btn.textContent = `GENERATE ${tier.toUpperCase()} LICENSE KEY`;
+    btn.textContent = `GENERATE ${tier.toUpperCase()} LICENSE KEY →`;
   }
 
+  // ─── KEY GENERATION ───────────────────────
   function randHex(len) {
-    let result = '';
-    const chars = '0123456789ABCDEF';
-    for (let i = 0; i < len; i++) result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
+    let r = '';
+    for (let i = 0; i < len; i++) r += '0123456789ABCDEF'[Math.floor(Math.random() * 16)];
+    return r;
   }
 
-  function buildKey(tier, customer, seats) {
-    const prefixes = { free: 'BSF', pro: 'BSP', enterprise: 'BSE' };
-    const prefix = prefixes[tier];
+  function buildKey(tier, seats) {
+    const prefix = { free: 'BSF', pro: 'BSP', enterprise: 'BSE' }[tier];
     const ts = Date.now().toString(16).toUpperCase().slice(-6);
-    const rand1 = randHex(8);
-    const rand2 = randHex(8);
-    const rand3 = randHex(6);
-    const seatCode = tier === 'enterprise' ? seats.toString().padStart(3, '0') : '001';
-    return `${prefix}-${ts}-${rand1}-${rand2}-${rand3}-S${seatCode}`;
+    const s = seats.toString().padStart(3, '0');
+    return `${prefix}-${ts}-${randHex(8)}-${randHex(8)}-${randHex(6)}-S${s}`;
   }
 
-  function formatDate(d) {
+  function fmtDate(d) {
     return d.toISOString().split('T')[0];
   }
 
@@ -534,43 +872,56 @@
     if (!selectedTier) return;
 
     const customer = document.getElementById('customerName').value.trim() || 'Anonymous';
-    const seats = parseInt(document.getElementById('seatCount').value) || 1;
+    const email    = document.getElementById('customerEmail').value.trim() || '—';
+    const seats    = parseInt(document.getElementById('seatCount').value) || 1;
 
-    const key = buildKey(selectedTier, customer, seats);
-    lastKey = key;
+    const key    = buildKey(selectedTier, seats);
+    lastKey      = key;
+    const now    = new Date();
+    const expiry = selectedTier === 'enterprise'
+      ? null
+      : new Date(now.getTime() + 32 * 24 * 60 * 60 * 1000);
 
-    const now = new Date();
-    const expiry = selectedTier === 'enterprise' ? null : new Date(now.getTime() + 32 * 24 * 60 * 60 * 1000);
+    // Key block
+    const kb = document.getElementById('keyBlock');
+    kb.className = `key-block tier-${selectedTier}`;
+    const kt = document.getElementById('keyText');
+    kt.className = `key-text tier-${selectedTier}`;
+    kt.textContent = key;
 
-    // Update display
-    const keyDisplay = document.getElementById('keyDisplay');
-    keyDisplay.textContent = key;
-    keyDisplay.className = `key-display ${selectedTier}`;
-
-    document.getElementById('metaTier').textContent = selectedTier.toUpperCase();
+    // Meta
+    document.getElementById('metaTier').textContent     = selectedTier.toUpperCase();
+    document.getElementById('metaTier').className       = `meta-value ${selectedTier}`;
     document.getElementById('metaCustomer').textContent = customer;
-    document.getElementById('metaIssued').textContent = formatDate(now);
+    document.getElementById('metaIssued').textContent   = fmtDate(now);
+    document.getElementById('metaSeats').textContent    = selectedTier === 'enterprise' ? seats : '1';
+    document.getElementById('metaEmail').textContent    = email;
 
     const expiryEl = document.getElementById('metaExpiry');
     if (selectedTier === 'enterprise') {
       expiryEl.textContent = '∞ Never Expires';
-      expiryEl.className = 'meta-item-value never';
+      expiryEl.className = 'meta-value never';
     } else {
-      expiryEl.textContent = formatDate(expiry);
-      expiryEl.className = 'meta-item-value expires';
+      expiryEl.textContent = fmtDate(expiry);
+      expiryEl.className = 'meta-value expiry';
     }
 
-    document.getElementById('outputCard').className = 'output-card visible';
+    // Show output
+    const oc = document.getElementById('outputCard');
+    oc.classList.add('visible');
+    oc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
     // Reset copy btn
-    document.getElementById('copyBtn').textContent = '⬡ Copy License Key';
-    document.getElementById('copyBtn').className = 'copy-btn';
+    const cb = document.getElementById('copyBtn');
+    cb.textContent = '⬡ Copy License Key';
+    cb.className = 'copy-btn';
 
-    // Add to log
-    log.unshift({ key, tier: selectedTier, customer });
+    // Log
+    sessionLog.unshift({ key, tier: selectedTier, customer, email, issued: fmtDate(now) });
     renderLog();
   }
 
+  // ─── COPY ─────────────────────────────────
   function copyKey() {
     if (!lastKey) return;
     navigator.clipboard.writeText(lastKey).then(() => {
@@ -584,24 +935,78 @@
     });
   }
 
+  // ─── LOG ──────────────────────────────────
   function renderLog() {
     const list = document.getElementById('logList');
-    if (log.length === 0) {
-      list.innerHTML = '<li class="empty-log">No keys generated yet.</li>';
+    if (sessionLog.length === 0) {
+      list.innerHTML = '<li class="log-empty">No keys generated this session.</li>';
       return;
     }
-    list.innerHTML = log.map(entry => `
+    list.innerHTML = sessionLog.map(e => `
       <li class="log-item">
-        <span class="log-key">${entry.key}</span>
-        <span class="log-badge badge-${entry.tier}">${entry.tier}</span>
+        <span class="log-key">${e.key}</span>
+        <span class="log-customer">${e.customer}</span>
+        <span class="log-badge badge-${e.tier}">${e.tier}</span>
       </li>
     `).join('');
   }
 
   function clearLog() {
-    log.length = 0;
+    sessionLog.length = 0;
     renderLog();
   }
+
+  // ─── BACKGROUND CANVAS ────────────────────
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < 55; i++) {
+      particles.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.2 + 0.4,
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 130) {
+          ctx.strokeStyle = `rgba(0,255,136,${0.09*(1-dist/130)})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    particles.forEach(p => {
+      ctx.fillStyle = `rgba(0,255,136,${p.alpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fill();
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+  resize(); initParticles(); draw();
 </script>
 
 </body>
