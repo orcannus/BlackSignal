@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackSignal Keygen</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #060810;
+    --surface: rgba(255,255,255,0.04);
+    --surface2: rgba(255,255,255,0.07);
+    --border: rgba(255,255,255,0.08);
+    --accent: #00ff88;
+    --accent2: #00cfff;
+    --accent3: #bf5fff;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    backdrop-filter: blur(20px);
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  input, select {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  input:focus, select:focus {
+    border-color: rgba(0,255,136,0.4);
+  }
+
+  select option {
+    background: #0e1117;
+    color: var(--text);
+  }
+
+  .tier-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tier-btn {
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .tier-btn:hover {
+    background: var(--surface2);
+    color: var(--text);
+  }
+
+  .tier-btn.active-free {
+    border-color: rgba(0,207,255,0.5);
+    background: rgba(0,207,255,0.08);
+    color: var(--accent2);
+  }
+
+  .tier-btn.active-pro {
+    border-color: rgba(0,255,136,0.5);
+    background: rgba(0,255,136,0.08);
+    color: var(--accent);
+  }
+
+  .tier-btn.active-enterprise {
+    border-color: rgba(191,95,255,0.5);
+    background: rgba(191,95,255,0.08);
+    color: var(--accent3);
+  }
+
+  .tier-detail {
+    display: none;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .tier-detail.visible { display: block; }
+
+  .tier-detail strong { color: var(--text); }
+
+  .generate-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 10px;
+    color: #000;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+    box-shadow: 0 0 25px rgba(0,255,136,0.2);
+  }
+
+  .generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(0,255,136,0.35);
+  }
+
+  .generate-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* OUTPUT */
+  .output-card {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    backdrop-filter: blur(20px);
+    animation: fadeIn 0.4s ease;
+  }
+
+  .output-card.visible { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .output-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .key-display {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(0,255,136,0.2);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    word-break: break-all;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .key-display.enterprise {
+    color: var(--accent3);
+    border-color: rgba(191,95,255,0.25);
+  }
+
+  .key-display.pro {
+    color: var(--accent);
+    border-color: rgba(0,255,136,0.25);
+  }
+
+  .key-display.free {
+    color: var(--accent2);
+    border-color: rgba(0,207,255,0.25);
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .meta-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .meta-item-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta-item-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .meta-item-value.never {
+    color: var(--accent3);
+  }
+
+  .meta-item-value.expires {
+    color: var(--accent2);
+  }
+
+  .copy-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .copy-btn:hover {
+    background: var(--surface2);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .copy-btn.copied {
+    border-color: rgba(0,255,136,0.4);
+    color: var(--accent);
+  }
+
+  /* KEY LOG */
+  .log-section {
+    margin-top: 1.5rem;
+  }
+
+  .log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .log-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .log-clear {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .log-clear:hover { color: #ff4466; }
+
+  .log-list {
+    list-style: none;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .log-list::-webkit-scrollbar { width: 4px; }
+  .log-list::-webkit-scrollbar-track { background: transparent; }
+  .log-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  .log-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+  }
+
+  .log-item:last-child { border-bottom: none; }
+
+  .log-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .log-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .badge-free { background: rgba(0,207,255,0.1); color: var(--accent2); border: 1px solid rgba(0,207,255,0.2); }
+  .badge-pro { background: rgba(0,255,136,0.1); color: var(--accent); border: 1px solid rgba(0,255,136,0.2); }
+  .badge-enterprise { background: rgba(191,95,255,0.1); color: var(--accent3); border: 1px solid rgba(191,95,255,0.2); }
+
+  .empty-log {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    padding: 1.5rem 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="logo">⬡ BLACKSIGNAL</div>
+    <h1>License Keygen</h1>
+    <p class="subtitle">Generate cryptographic license keys for each pricing tier.</p>
+  </div>
+
+  <div class="card">
+    <div class="form-group">
+      <label>// Select Tier</label>
+      <div class="tier-selector">
+        <button class="tier-btn" id="btn-free" onclick="selectTier('free')">FREE</button>
+        <button class="tier-btn" id="btn-pro" onclick="selectTier('pro')">PRO</button>
+        <button class="tier-btn" id="btn-enterprise" onclick="selectTier('enterprise')">ENTERPRISE</button>
+      </div>
+      <div class="tier-detail" id="detail-free">
+        <strong>Free Tier</strong> — 8 core tools. License valid for <strong>32 days</strong> from generation. Ideal for evaluation and onboarding.
+      </div>
+      <div class="tier-detail" id="detail-pro">
+        <strong>Pro Tier</strong> — All 20 tools unlocked. License valid for <strong>32 days</strong>, auto-renews with active subscription at <strong>$29/mo</strong>.
+      </div>
+      <div class="tier-detail" id="detail-enterprise">
+        <strong>Enterprise Tier</strong> — All 20 tools + API access. License <strong>never expires</strong>. Perpetual key tied to organization identifier.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>// Customer / Org Name</label>
+      <input type="text" id="customerName" placeholder="e.g. John Doe or Acme Corp" />
+    </div>
+
+    <div class="form-group">
+      <label>// Seat Count (Enterprise Only)</label>
+      <input type="number" id="seatCount" placeholder="1" min="1" max="9999" value="1" />
+    </div>
+
+    <button class="generate-btn" id="generateBtn" onclick="generateKey()" disabled>
+      SELECT A TIER TO GENERATE
+    </button>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="output-card" id="outputCard">
+    <div class="output-label">// Generated License Key</div>
+    <div class="key-display" id="keyDisplay"></div>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-item-label">Tier</div>
+        <div class="meta-item-value" id="metaTier">—</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-item-label">Customer</div>
+        <div class="meta-item-value" id="metaCustomer">—</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-item-label">Issue Date</div>
+        <div class="meta-item-value" id="metaIssued">—</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-item-label">Expiry</div>
+        <div class="meta-item-value" id="metaExpiry">—</div>
+      </div>
+    </div>
+
+    <button class="copy-btn" id="copyBtn" onclick="copyKey()">⬡ Copy License Key</button>
+
+    <!-- LOG -->
+    <div class="log-section">
+      <div class="log-header">
+        <div class="log-title">// Key Log</div>
+        <button class="log-clear" onclick="clearLog()">clear log</button>
+      </div>
+      <ul class="log-list" id="logList">
+        <li class="empty-log">No keys generated yet.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  let selectedTier = null;
+  let lastKey = '';
+  const log = [];
+
+  function selectTier(tier) {
+    selectedTier = tier;
+    ['free','pro','enterprise'].forEach(t => {
+      document.getElementById('btn-' + t).className = 'tier-btn';
+      document.getElementById('detail-' + t).className = 'tier-detail';
+    });
+    document.getElementById('btn-' + tier).className = `tier-btn active-${tier}`;
+    document.getElementById('detail-' + tier).className = 'tier-detail visible';
+
+    const seatInput = document.getElementById('seatCount');
+    seatInput.disabled = tier !== 'enterprise';
+    seatInput.style.opacity = tier === 'enterprise' ? '1' : '0.3';
+
+    const btn = document.getElementById('generateBtn');
+    btn.disabled = false;
+    btn.textContent = `GENERATE ${tier.toUpperCase()} LICENSE KEY`;
+  }
+
+  function randHex(len) {
+    let result = '';
+    const chars = '0123456789ABCDEF';
+    for (let i = 0; i < len; i++) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+  }
+
+  function buildKey(tier, customer, seats) {
+    const prefixes = { free: 'BSF', pro: 'BSP', enterprise: 'BSE' };
+    const prefix = prefixes[tier];
+    const ts = Date.now().toString(16).toUpperCase().slice(-6);
+    const rand1 = randHex(8);
+    const rand2 = randHex(8);
+    const rand3 = randHex(6);
+    const seatCode = tier === 'enterprise' ? seats.toString().padStart(3, '0') : '001';
+    return `${prefix}-${ts}-${rand1}-${rand2}-${rand3}-S${seatCode}`;
+  }
+
+  function formatDate(d) {
+    return d.toISOString().split('T')[0];
+  }
+
+  function generateKey() {
+    if (!selectedTier) return;
+
+    const customer = document.getElementById('customerName').value.trim() || 'Anonymous';
+    const seats = parseInt(document.getElementById('seatCount').value) || 1;
+
+    const key = buildKey(selectedTier, customer, seats);
+    lastKey = key;
+
+    const now = new Date();
+    const expiry = selectedTier === 'enterprise' ? null : new Date(now.getTime() + 32 * 24 * 60 * 60 * 1000);
+
+    // Update display
+    const keyDisplay = document.getElementById('keyDisplay');
+    keyDisplay.textContent = key;
+    keyDisplay.className = `key-display ${selectedTier}`;
+
+    document.getElementById('metaTier').textContent = selectedTier.toUpperCase();
+    document.getElementById('metaCustomer').textContent = customer;
+    document.getElementById('metaIssued').textContent = formatDate(now);
+
+    const expiryEl = document.getElementById('metaExpiry');
+    if (selectedTier === 'enterprise') {
+      expiryEl.textContent = '∞ Never Expires';
+      expiryEl.className = 'meta-item-value never';
+    } else {
+      expiryEl.textContent = formatDate(expiry);
+      expiryEl.className = 'meta-item-value expires';
+    }
+
+    document.getElementById('outputCard').className = 'output-card visible';
+
+    // Reset copy btn
+    document.getElementById('copyBtn').textContent = '⬡ Copy License Key';
+    document.getElementById('copyBtn').className = 'copy-btn';
+
+    // Add to log
+    log.unshift({ key, tier: selectedTier, customer });
+    renderLog();
+  }
+
+  function copyKey() {
+    if (!lastKey) return;
+    navigator.clipboard.writeText(lastKey).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✓ Copied to Clipboard';
+      btn.className = 'copy-btn copied';
+      setTimeout(() => {
+        btn.textContent = '⬡ Copy License Key';
+        btn.className = 'copy-btn';
+      }, 2500);
+    });
+  }
+
+  function renderLog() {
+    const list = document.getElementById('logList');
+    if (log.length === 0) {
+      list.innerHTML = '<li class="empty-log">No keys generated yet.</li>';
+      return;
+    }
+    list.innerHTML = log.map(entry => `
+      <li class="log-item">
+        <span class="log-key">${entry.key}</span>
+        <span class="log-badge badge-${entry.tier}">${entry.tier}</span>
+      </li>
+    `).join('');
+  }
+
+  function clearLog() {
+    log.length = 0;
+    renderLog();
+  }
+</script>
+
+</body>
+</html>

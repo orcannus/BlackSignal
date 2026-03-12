@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackSignal Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #060810;
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.07);
+    --border: rgba(255,255,255,0.08);
+    --accent: #00ff88;
+    --accent2: #00cfff;
+    --accent3: #bf5fff;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --danger: #ff4466;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #bgCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    background: rgba(6,8,16,0.8);
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: default;
+  }
+
+  .badge-free { background: rgba(0,207,255,0.1); color: var(--accent2); border: 1px solid rgba(0,207,255,0.2); }
+  .badge-pro { background: rgba(0,255,136,0.1); color: var(--accent); border: 1px solid rgba(0,255,136,0.2); }
+  .badge-enterprise { background: rgba(191,95,255,0.1); color: var(--accent3); border: 1px solid rgba(191,95,255,0.2); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-key-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 0.9rem;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.45rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .nav-btn:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  /* HEADER */
+  .hub-header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+  }
+
+  .hub-header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+
+  .hub-header h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hub-header p {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 1.5rem 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-lbl {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+  }
+
+  /* SEARCH */
+  .search-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    padding: 0 2rem;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.85rem 1rem 0.85rem 3rem;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+    backdrop-filter: blur(10px);
+  }
+
+  .search-input:focus { border-color: rgba(0,255,136,0.3); }
+  .search-input::placeholder { color: var(--muted); }
+
+  .search-icon {
+    position: absolute;
+    left: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 1rem;
+    pointer-events: none;
+  }
+
+  /* MAIN */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+
+  /* CATEGORY */
+  .category {
+    margin-bottom: 3rem;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .category-icon { font-size: 1.1rem; }
+
+  .category-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .category-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    margin-left: auto;
+  }
+
+  /* TOOL GRID */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  /* TOOL CARD */
+  .tool-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--text);
+    display: block;
+    transition: all 0.25s;
+    backdrop-filter: blur(16px);
+    overflow: hidden;
+  }
+
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,255,136,0.03), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+    border-radius: 14px;
+  }
+
+  .tool-card:hover {
+    border-color: rgba(0,207,255,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .tool-card:hover::before { opacity: 1; }
+
+  .tool-card-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .tool-card-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .tool-card-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* LOCKED STATE */
+  .tool-card.locked {
+    cursor: not-allowed;
+    opacity: 0.45;
+    filter: grayscale(0.6);
+  }
+
+  .tool-card.locked:hover {
+    border-color: rgba(255,68,102,0.3);
+    transform: none;
+    box-shadow: none;
+  }
+
+  .tool-card.locked:hover::before { opacity: 0; }
+
+  .lock-overlay {
+    display: none;
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    font-size: 0.75rem;
+    background: rgba(255,68,102,0.12);
+    border: 1px solid rgba(255,68,102,0.25);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--danger);
+    letter-spacing: 0.05em;
+  }
+
+  .tool-card.locked .lock-overlay { display: block; }
+
+  /* LICENSE GATE MODAL */
+  .license-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(6,8,16,0.97);
+    backdrop-filter: blur(24px);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .license-gate.visible { display: flex; }
+
+  .license-gate-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 3rem;
+    max-width: 540px;
+    width: 90%;
+    text-align: center;
+    backdrop-filter: blur(30px);
+    animation: fadeUp 0.4s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .gate-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+  }
+
+  .gate-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+  .license-gate-card h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .license-gate-card p {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .license-input-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .license-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    outline: none;
+    transition: border-color 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .license-input:focus { border-color: rgba(0,255,136,0.4); }
+  .license-input::placeholder { color: var(--muted); font-size: 0.72rem; }
+
+  .license-submit {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 0.85rem 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    box-shadow: 0 0 20px rgba(0,255,136,0.15);
+  }
+
+  .license-submit:hover {
+    box-shadow: 0 0 30px rgba(0,255,136,0.3);
+    transform: translateY(-1px);
+  }
+
+  .license-error {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--danger);
+    min-height: 1.2rem;
+    margin-bottom: 1.25rem;
+    text-align: left;
+  }
+
+  .gate-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+
+  .gate-divider::before,
+  .gate-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .gate-links {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .gate-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent2);
+    text-decoration: none;
+    background: rgba(0,207,255,0.08);
+    border: 1px solid rgba(0,207,255,0.2);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s;
+  }
+
+  .gate-link:hover {
+    background: rgba(0,207,255,0.15);
+    border-color: rgba(0,207,255,0.35);
+  }
+
+  /* LOCKED TOOL MODAL */
+  .locked-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(6,8,16,0.88);
+    backdrop-filter: blur(16px);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .locked-modal.visible { display: flex; }
+
+  .locked-modal-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,68,102,0.2);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 440px;
+    width: 90%;
+    text-align: center;
+    backdrop-filter: blur(30px);
+    animation: fadeUp 0.3s ease;
+  }
+
+  .locked-modal-card h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+
+  .locked-modal-card p {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .locked-tool-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent2);
+    background: rgba(0,207,255,0.08);
+    border: 1px solid rgba(0,207,255,0.2);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .locked-modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .btn-upgrade {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-upgrade:hover { opacity: 0.85; }
+
+  .btn-dismiss {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-dismiss:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+  /* HIDDEN */
+  .hidden { display: none !important; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0.85rem 1.25rem; }
+    .nav-key-display { display: none; }
+    main { padding: 0 1.25rem 3rem; }
+    .hub-header { padding: 2.5rem 1.25rem 1.5rem; }
+    .search-wrap { padding: 0 1.25rem; }
+    .license-gate-card { padding: 2rem 1.5rem; }
+    .license-input-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a class="nav-logo" href="#">⬡ BLACKSIGNAL</a>
+    <span class="nav-badge hidden" id="tierBadge"></span>
+  </div>
+  <div class="nav-right">
+    <span class="nav-key-display hidden" id="keyDisplay"></span>
+    <button class="nav-btn" onclick="showLicenseGate()">⬡ Change License</button>
+    <a class="nav-btn" href="BlackSignalLanding.html" style="color:var(--accent2);border-color:rgba(0,207,255,0.2);">← Landing</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="hub-header">
+  <h1>The <span>Arsenal</span></h1>
+  <p>20 standalone cybersecurity tools. Zero dependencies. One hub.</p>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num" id="statUnlocked">—</div><div class="stat-lbl">Unlocked</div></div>
+  <div class="stat-item"><div class="stat-num">20</div><div class="stat-lbl">Total Tools</div></div>
+  <div class="stat-item"><div class="stat-num">5</div><div class="stat-lbl">Categories</div></div>
+  <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Dependencies</div></div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <span class="search-icon">🔍</span>
+  <input class="search-input" id="searchInput" placeholder="// search tools..." oninput="filterTools()" />
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- RECON & OSINT -->
+  <div class="category" data-category="recon">
+    <div class="category-header">
+      <span class="category-icon">🔍</span>
+      <span class="category-name">Recon & OSINT</span>
+      <span class="category-count">6 tools</span>
+    </div>
+    <div class="tool-grid">
+      <a class="tool-card" href="BlackSignalIP.html" data-tool="BlackSignalIP" data-name="IP Intelligence">
+        <span class="tool-card-icon">🌐</span>
+        <div class="tool-card-name">IP Intelligence</div>
+        <div class="tool-card-desc">Geolocation, ASN, threat scoring and abuse history for any IP.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalWHOIS.html" data-tool="BlackSignalWHOIS" data-name="WHOIS Lookup">
+        <span class="tool-card-icon">📋</span>
+        <div class="tool-card-name">WHOIS Lookup</div>
+        <div class="tool-card-desc">Domain registration data, registrar details, ownership history.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalSubdomain.html" data-tool="BlackSignalSubdomain" data-name="Subdomain Scanner">
+        <span class="tool-card-icon">🔎</span>
+        <div class="tool-card-name">Subdomain Scanner</div>
+        <div class="tool-card-desc">Enumerate subdomains and map attack surface of any domain.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalHeaders.html" data-tool="BlackSignalHeaders" data-name="HTTP Headers">
+        <span class="tool-card-icon">📡</span>
+        <div class="tool-card-name">HTTP Headers</div>
+        <div class="tool-card-desc">Inspect response headers, security policies, server fingerprints.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalWeb.html" data-tool="BlackSignalWeb" data-name="Web Recon">
+        <span class="tool-card-icon">🕸️</span>
+        <div class="tool-card-name">Web Recon</div>
+        <div class="tool-card-desc">Technology stack detection, CMS identification, metadata extraction.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalURL.html" data-tool="BlackSignalURL" data-name="URL Analyzer">
+        <span class="tool-card-icon">🔗</span>
+        <div class="tool-card-name">URL Analyzer</div>
+        <div class="tool-card-desc">Decode, expand, and threat-score suspicious URLs before clicking.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- IDENTITY & DARK WEB -->
+  <div class="category" data-category="identity">
+    <div class="category-header">
+      <span class="category-icon">🕵️</span>
+      <span class="category-name">Identity & Dark Web</span>
+      <span class="category-count">5 tools</span>
+    </div>
+    <div class="tool-grid">
+      <a class="tool-card" href="BlackSignalDark.html" data-tool="BlackSignalDark" data-name="Dark Web Monitor">
+        <span class="tool-card-icon">🌒</span>
+        <div class="tool-card-name">Dark Web Monitor</div>
+        <div class="tool-card-desc">Check exposure across dark web marketplaces and paste sites.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalID.html" data-tool="BlackSignalID" data-name="Identity Checker">
+        <span class="tool-card-icon">🪪</span>
+        <div class="tool-card-name">Identity Checker</div>
+        <div class="tool-card-desc">Validate and cross-reference identity data against breach databases.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalEmail.html" data-tool="BlackSignalEmail" data-name="Email Intelligence">
+        <span class="tool-card-icon">📧</span>
+        <div class="tool-card-name">Email Intelligence</div>
+        <div class="tool-card-desc">Breach history, domain validation, account existence checks.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalPhone.html" data-tool="BlackSignalPhone" data-name="Phone Lookup">
+        <span class="tool-card-icon">📱</span>
+        <div class="tool-card-name">Phone Lookup</div>
+        <div class="tool-card-desc">Carrier, location, and OSINT data tied to phone numbers.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalPassword.html" data-tool="BlackSignalPassword" data-name="Password Auditor">
+        <span class="tool-card-icon">🔐</span>
+        <div class="tool-card-name">Password Auditor</div>
+        <div class="tool-card-desc">Strength analysis, entropy scoring, breach exposure checks.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- DEFENSIVE -->
+  <div class="category" data-category="defensive">
+    <div class="category-header">
+      <span class="category-icon">🛡️</span>
+      <span class="category-name">Defensive Monitoring</span>
+      <span class="category-count">5 tools</span>
+    </div>
+    <div class="tool-grid">
+      <a class="tool-card" href="BlackSignalAlert.html" data-tool="BlackSignalAlert" data-name="Alert Monitor">
+        <span class="tool-card-icon">🚨</span>
+        <div class="tool-card-name">Alert Monitor</div>
+        <div class="tool-card-desc">Real-time security alert triage and notification management.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalFirewall.html" data-tool="BlackSignalFirewall" data-name="Firewall Analyzer">
+        <span class="tool-card-icon">🔥</span>
+        <div class="tool-card-name">Firewall Analyzer</div>
+        <div class="tool-card-desc">Parse and visualize firewall rules, ACLs, and policy gaps.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalBaseline.html" data-tool="BlackSignalBaseline" data-name="Baseline Monitor">
+        <span class="tool-card-icon">📊</span>
+        <div class="tool-card-name">Baseline Monitor</div>
+        <div class="tool-card-desc">Establish and track behavioral baselines for anomaly detection.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalThreatFeed.html" data-tool="BlackSignalThreatFeed" data-name="Threat Feed">
+        <span class="tool-card-icon">📰</span>
+        <div class="tool-card-name">Threat Feed</div>
+        <div class="tool-card-desc">Aggregate and parse IOCs from live threat intelligence feeds.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalLog.html" data-tool="BlackSignalLog" data-name="Log Analyzer">
+        <span class="tool-card-icon">📜</span>
+        <div class="tool-card-name">Log Analyzer</div>
+        <div class="tool-card-desc">Parse, filter, and correlate logs from multiple source formats.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ANALYSIS & FORENSICS -->
+  <div class="category" data-category="forensics">
+    <div class="category-header">
+      <span class="category-icon">🔬</span>
+      <span class="category-name">Analysis & Forensics</span>
+      <span class="category-count">3 tools</span>
+    </div>
+    <div class="tool-grid">
+      <a class="tool-card" href="BlackSignalHash.html" data-tool="BlackSignalHash" data-name="Hash Analyzer">
+        <span class="tool-card-icon">#️⃣</span>
+        <div class="tool-card-name">Hash Analyzer</div>
+        <div class="tool-card-desc">Generate, compare, and lookup file hashes across threat databases.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalDecode.html" data-tool="BlackSignalDecode" data-name="Decode Studio">
+        <span class="tool-card-icon">⚙️</span>
+        <div class="tool-card-name">Decode Studio</div>
+        <div class="tool-card-desc">Decode Base64, hex, URL encoding, and obfuscated payloads.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+      <a class="tool-card" href="BlackSignalSSL.html" data-tool="BlackSignalSSL" data-name="SSL Inspector">
+        <span class="tool-card-icon">🔒</span>
+        <div class="tool-card-name">SSL Inspector</div>
+        <div class="tool-card-desc">Certificate chain analysis, expiry checks, cipher suite auditing.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- CTF -->
+  <div class="category" data-category="ctf">
+    <div class="category-header">
+      <span class="category-icon">🏁</span>
+      <span class="category-name">CTF Training</span>
+      <span class="category-count">1 tool</span>
+    </div>
+    <div class="tool-grid">
+      <a class="tool-card" href="BlackSignalCTF.html" data-tool="BlackSignalCTF" data-name="CTF Lab">
+        <span class="tool-card-icon">🚩</span>
+        <div class="tool-card-name">CTF Lab</div>
+        <div class="tool-card-desc">Integrated capture-the-flag training environment with guided challenges.</div>
+        <span class="lock-overlay">🔒 PRO</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<!-- LICENSE GATE -->
+<div class="license-gate visible" id="licenseGate">
+  <div class="license-gate-card">
+    <div class="gate-logo">⬡ BLACKSIGNAL HUB</div>
+    <div class="gate-icon">🔑</div>
+    <h2>Activate Your License</h2>
+    <p>Enter your BlackSignal license key to access the hub. Free keys unlock 4 tools. Pro and Enterprise unlock all 20.</p>
+    <div class="license-input-row">
+      <input class="license-input" id="licenseInput" placeholder="BSF-XXXXXX-XXXXXXXX-XXXXXXXX-XXXXXX-SXXX" />
+      <button class="license-submit" onclick="submitLicense()">Activate</button>
+    </div>
+    <div class="license-error" id="licenseError"></div>
+    <div class="gate-divider">or</div>
+    <div class="gate-links">
+      <a class="gate-link" href="BlackSignalKeygen.html" target="_blank">⬡ Generate a Key</a>
+      <a class="gate-link" href="BlackSignalLanding.html" target="_blank" style="color:var(--accent3);background:rgba(191,95,255,0.08);border-color:rgba(191,95,255,0.2);">↑ View Pricing</a>
+    </div>
+  </div>
+</div>
+
+<!-- LOCKED TOOL MODAL -->
+<div class="locked-modal" id="lockedModal">
+  <div class="locked-modal-card">
+    <div style="font-size:2.5rem;margin-bottom:1rem;">🔒</div>
+    <h3>License Required</h3>
+    <p>This tool requires a Pro or Enterprise license. Upgrade to unlock all 20 BlackSignal tools.</p>
+    <div class="locked-tool-name" id="lockedToolName">// tool locked</div>
+    <div class="locked-modal-actions">
+      <a class="btn-upgrade" href="BlackSignalLanding.html#pricing">Upgrade Now →</a>
+      <button class="btn-dismiss" onclick="closeLockedModal()">Dismiss</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── CONFIG ───────────────────────────────────────────────
+  const FREE_TOOLS = ['BlackSignalEmail','BlackSignalPhone','BlackSignalPassword','BlackSignalIP'];
+
+  // ─── KEY VALIDATION ───────────────────────────────────────
+  function validateKey(key) {
+    return /^BS[FPE]-[0-9A-F]{6}-[0-9A-F]{8}-[0-9A-F]{8}-[0-9A-F]{6}-S\d{3}$/.test(key);
+  }
+
+  function getTier(key) {
+    if (key.startsWith('BSF-')) return 'free';
+    if (key.startsWith('BSP-')) return 'pro';
+    if (key.startsWith('BSE-')) return 'enterprise';
+    return null;
+  }
+
+  // ─── LICENSE GATE ─────────────────────────────────────────
+  function submitLicense() {
+    const raw = document.getElementById('licenseInput').value.trim().toUpperCase();
+    const errorEl = document.getElementById('licenseError');
+
+    if (!validateKey(raw)) {
+      errorEl.textContent = '// invalid key — check format and try again';
+      return;
+    }
+
+    const tier = getTier(raw);
+    localStorage.setItem('bs_license_key', raw);
+    localStorage.setItem('bs_license_tier', tier);
+    errorEl.textContent = '';
+    document.getElementById('licenseGate').classList.remove('visible');
+    applyLicense(raw, tier);
+  }
+
+  function showLicenseGate() {
+    document.getElementById('licenseInput').value = localStorage.getItem('bs_license_key') || '';
+    document.getElementById('licenseError').textContent = '';
+    document.getElementById('licenseGate').classList.add('visible');
+  }
+
+  // Allow Enter key
+  document.getElementById('licenseInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitLicense();
+  });
+
+  // ─── APPLY LICENSE ────────────────────────────────────────
+  function applyLicense(key, tier) {
+    // Nav badge
+    const badge = document.getElementById('tierBadge');
+    badge.className = `nav-badge badge-${tier}`;
+    badge.textContent = tier.toUpperCase();
+    badge.classList.remove('hidden');
+
+    // Key display
+    const kd = document.getElementById('keyDisplay');
+    kd.textContent = key.slice(0, 18) + '…';
+    kd.classList.remove('hidden');
+
+    // Stats
+    const unlocked = (tier === 'free') ? FREE_TOOLS.length : 20;
+    document.getElementById('statUnlocked').textContent = unlocked;
+
+    // Tool cards
+    const cards = document.querySelectorAll('.tool-card');
+    cards.forEach(card => {
+      const toolId = card.getAttribute('data-tool');
+      const isLocked = tier === 'free' && !FREE_TOOLS.includes(toolId);
+
+      if (isLocked) {
+        card.classList.add('locked');
+        card.addEventListener('click', e => {
+          e.preventDefault();
+          const name = card.getAttribute('data-name');
+          document.getElementById('lockedToolName').textContent = '// ' + name;
+          document.getElementById('lockedModal').classList.add('visible');
+        });
+      } else {
+        card.classList.remove('locked');
+      }
+    });
+  }
+
+  // ─── LOCKED MODAL ─────────────────────────────────────────
+  function closeLockedModal() {
+    document.getElementById('lockedModal').classList.remove('visible');
+  }
+
+  document.getElementById('lockedModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('lockedModal')) closeLockedModal();
+  });
+
+  // ─── SEARCH ───────────────────────────────────────────────
+  function filterTools() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('.tool-card').forEach(card => {
+      const name = card.getAttribute('data-name').toLowerCase();
+      const desc = card.querySelector('.tool-card-desc').textContent.toLowerCase();
+      card.style.display = (name.includes(q) || desc.includes(q)) ? '' : 'none';
+    });
+
+    // Hide empty categories
+    document.querySelectorAll('.category').forEach(cat => {
+      const visible = [...cat.querySelectorAll('.tool-card')].some(c => c.style.display !== 'none');
+      cat.style.display = visible ? '' : 'none';
+    });
+  }
+
+  // ─── INIT ─────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    const key = localStorage.getItem('bs_license_key');
+    const tier = localStorage.getItem('bs_license_tier');
+
+    if (key && validateKey(key) && tier) {
+      document.getElementById('licenseGate').classList.remove('visible');
+      applyLicense(key, tier);
+    }
+    // else gate stays visible
+  });
+
+  // ─── BACKGROUND CANVAS ────────────────────────────────────
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < 60; i++) {
+      particles.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.2 + 0.4,
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 130) {
+          ctx.strokeStyle = `rgba(0,255,136,${0.1*(1-dist/130)})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    particles.forEach(p => {
+      ctx.fillStyle = `rgba(0,255,136,${p.alpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fill();
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+  resize(); initParticles(); draw();
+</script>
+
+</body>
+</html>
