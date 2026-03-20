@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackSignal – Licensing | Orcannus Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#05080a;--card:#0c1014;--border:#1a2530;--accent:#00ff9d;--accent2:#00c8ff;--accentR:#ff3860;--text:#b0bec5;--muted:#4a5568;--heading:#e2e8f0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,157,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,157,0.02) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
+  .container{max-width:1140px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+  header{padding:28px 0 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.3rem;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;text-shadow:0 0 12px rgba(0,255,157,0.3);}
+  .logo span{color:var(--heading);}
+  .badge{font-family:'Share Tech Mono',monospace;font-size:0.7rem;background:rgba(0,255,157,0.06);border:1px solid rgba(0,255,157,0.18);color:var(--accent);padding:4px 10px;letter-spacing:0.1em;}
+  .hero{text-align:center;padding:70px 0 50px;}
+  .hero-label{font-family:'Share Tech Mono',monospace;font-size:0.72rem;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:10px;}
+  .hero-label::before,.hero-label::after{content:'';display:block;width:40px;height:1px;background:var(--accent);opacity:0.35;}
+  .hero h1{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:clamp(2.2rem,5vw,3.4rem);color:var(--heading);letter-spacing:0.04em;line-height:1.1;margin-bottom:18px;}
+  .hero h1 em{font-style:normal;color:var(--accent);}
+  .hero p{font-size:1.05rem;color:var(--muted);max-width:540px;margin:0 auto;line-height:1.7;}
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-bottom:80px;}
+  @media(max-width:760px){.pricing-grid{grid-template-columns:1fr;max-width:380px;margin:0 auto;}}
+  .card{background:var(--card);border:1px solid var(--border);padding:34px 28px 30px;position:relative;transition:border-color 0.2s,transform 0.2s;backdrop-filter:blur(4px);}
+  .card:hover{transform:translateY(-3px);}
+  .card.tier-f{border-color:rgba(0,200,255,0.2);}
+  .card.tier-f:hover{border-color:rgba(0,200,255,0.4);}
+  .card.tier-p{border-color:rgba(0,255,157,0.3);background:linear-gradient(160deg,#081510 0%,var(--card) 60%);}
+  .card.tier-p:hover{border-color:rgba(0,255,157,0.5);}
+  .card.tier-p::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;padding:4px 14px;white-space:nowrap;font-weight:700;}
+  .card.tier-e{border-color:rgba(255,56,96,0.25);}
+  .card.tier-e:hover{border-color:rgba(255,56,96,0.45);}
+  .key-prefix{font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;margin-bottom:10px;padding:3px 8px;display:inline-block;}
+  .tier-f .key-prefix{background:rgba(0,200,255,0.08);color:var(--accent2);border:1px solid rgba(0,200,255,0.15);}
+  .tier-p .key-prefix{background:rgba(0,255,157,0.08);color:var(--accent);border:1px solid rgba(0,255,157,0.2);}
+  .tier-e .key-prefix{background:rgba(255,56,96,0.08);color:var(--accentR);border:1px solid rgba(255,56,96,0.18);}
+  .tier-name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--heading);margin-bottom:6px;margin-top:8px;}
+  .tier-desc{font-size:0.82rem;color:var(--muted);margin-bottom:22px;line-height:1.5;}
+  .price{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:2.8rem;color:var(--heading);line-height:1;margin-bottom:4px;}
+  .price sup{font-size:1.2rem;vertical-align:top;margin-top:8px;display:inline-block;}
+  .price-note{font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:26px;}
+  .divider{border:none;border-top:1px solid var(--border);margin-bottom:22px;}
+  .features{list-style:none;margin-bottom:30px;}
+  .features li{font-size:0.88rem;color:var(--text);padding:6px 0;display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+  .tier-f .features li::before{content:'▸';color:var(--accent2);font-size:0.75rem;margin-top:2px;flex-shrink:0;}
+  .tier-p .features li::before{content:'▸';color:var(--accent);font-size:0.75rem;margin-top:2px;flex-shrink:0;}
+  .tier-e .features li::before{content:'▸';color:var(--accentR);font-size:0.75rem;margin-top:2px;flex-shrink:0;}
+  .paypal-wrap{display:flex;justify-content:center;}
+  footer{border-top:1px solid var(--border);padding:28px 0;text-align:center;font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;position:relative;z-index:1;}
+  footer a{color:var(--accent);text-decoration:none;}
+  @keyframes scanline{0%{top:-5%}100%{top:105%}}
+  .scanline{position:fixed;left:0;width:100%;height:2px;background:linear-gradient(transparent,rgba(0,255,157,0.03),transparent);pointer-events:none;animation:scanline 8s linear infinite;z-index:9999;}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="container">
+  <header>
+    <div class="logo"><span>BLACK</span>SIGNAL</div>
+    <div class="badge">CYBERSECURITY TOOLKIT // LICENSING</div>
+  </header>
+  <section class="hero">
+    <div class="hero-label">Unlock the Full Arsenal</div>
+    <h1>20 Standalone<br><em>Security Tools</em></h1>
+    <p>Professional cybersecurity toolkit spanning Recon, OSINT, Identity, Defensive Monitoring, Forensics, and CTF Training. One-time license — no subscription required.</p>
+  </section>
+  <div class="pricing-grid">
+
+    <!-- Foundational (BSF) -->
+    <div class="card tier-f">
+      <div class="key-prefix">KEY PREFIX: BSF-</div>
+      <div class="tier-name">Foundational</div>
+      <div class="tier-desc">Core toolkit access for individual security practitioners and students.</div>
+      <div class="price"><sup>$</sup>29</div>
+      <div class="price-note">ONE-TIME LICENSE</div>
+      <hr class="divider">
+      <ul class="features">
+        <li>Access to Tier 1 tools (Recon &amp; OSINT)</li>
+        <li>Defensive Monitoring suite</li>
+        <li>CTF Training modules</li>
+        <li>Standalone HTML — no server needed</li>
+        <li>12-month updates</li>
+        <li>Email support</li>
+      </ul>
+      <div class="paypal-wrap">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_xclick">
+          <input type="hidden" name="business" value="rsweatland@orcannus.com">
+          <input type="hidden" name="item_name" value="BlackSignal Foundational License (BSF)">
+          <input type="hidden" name="amount" value="29.00">
+          <input type="hidden" name="currency_code" value="USD">
+          <input type="hidden" name="return" value="https://orcannus.github.io/BlackSignal/thank-you.html">
+          <input type="hidden" name="cancel_return" value="https://orcannus.github.io/BlackSignal/cancel.html">
+          <input type="hidden" name="no_shipping" value="1">
+          <input type="submit" value="BUY NOW — PAY WITH PAYPAL" style="background:#003087;color:#fff;font-family:'Share Tech Mono',monospace;font-size:0.78rem;letter-spacing:0.1em;padding:12px 20px;border:none;cursor:pointer;width:100%;" onmouseover="this.style.background='#001f5b'" onmouseout="this.style.background='#003087'">
+        </form>
+      </div>
+    </div>
+
+    <!-- Professional (BSP) -->
+    <div class="card tier-p">
+      <div class="key-prefix">KEY PREFIX: BSP-</div>
+      <div class="tier-name">Professional</div>
+      <div class="tier-desc">Full toolkit access for security professionals and penetration testers.</div>
+      <div class="price"><sup>$</sup>59</div>
+      <div class="price-note">ONE-TIME LICENSE</div>
+      <hr class="divider">
+      <ul class="features">
+        <li>All Foundational tools</li>
+        <li>Identity &amp; Dark Web suite</li>
+        <li>Analysis &amp; Forensics toolkit</li>
+        <li>Full 20-tool access</li>
+        <li>Lifetime updates</li>
+        <li>Priority support</li>
+      </ul>
+      <div class="paypal-wrap">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_xclick">
+          <input type="hidden" name="business" value="rsweatland@orcannus.com">
+          <input type="hidden" name="item_name" value="BlackSignal Professional License (BSP)">
+          <input type="hidden" name="amount" value="59.00">
+          <input type="hidden" name="currency_code" value="USD">
+          <input type="hidden" name="return" value="https://orcannus.github.io/BlackSignal/thank-you.html">
+          <input type="hidden" name="cancel_return" value="https://orcannus.github.io/BlackSignal/cancel.html">
+          <input type="hidden" name="no_shipping" value="1">
+          <input type="submit" value="BUY NOW — PAY WITH PAYPAL" style="background:#003087;color:#fff;font-family:'Share Tech Mono',monospace;font-size:0.78rem;letter-spacing:0.1em;padding:12px 20px;border:none;cursor:pointer;width:100%;" onmouseover="this.style.background='#001f5b'" onmouseout="this.style.background='#003087'">
+        </form>
+      </div>
+    </div>
+
+    <!-- Enterprise (BSE) -->
+    <div class="card tier-e">
+      <div class="key-prefix">KEY PREFIX: BSE-</div>
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-desc">Maximum capability for red teams, security firms, and enterprise deployments.</div>
+      <div class="price"><sup>$</sup>129</div>
+      <div class="price-note">ONE-TIME LICENSE</div>
+      <hr class="divider">
+      <ul class="features">
+        <li>All Professional tools</li>
+        <li>Multi-seat team deployment</li>
+        <li>Custom tool configuration</li>
+        <li>API integration support</li>
+        <li>Dedicated support channel</li>
+        <li>Lifetime updates + SLA</li>
+      </ul>
+      <div class="paypal-wrap">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_xclick">
+          <input type="hidden" name="business" value="rsweatland@orcannus.com">
+          <input type="hidden" name="item_name" value="BlackSignal Enterprise License (BSE)">
+          <input type="hidden" name="amount" value="129.00">
+          <input type="hidden" name="currency_code" value="USD">
+          <input type="hidden" name="return" value="https://orcannus.github.io/BlackSignal/thank-you.html">
+          <input type="hidden" name="cancel_return" value="https://orcannus.github.io/BlackSignal/cancel.html">
+          <input type="hidden" name="no_shipping" value="1">
+          <input type="submit" value="BUY NOW — PAY WITH PAYPAL" style="background:#003087;color:#fff;font-family:'Share Tech Mono',monospace;font-size:0.78rem;letter-spacing:0.1em;padding:12px 20px;border:none;cursor:pointer;width:100%;" onmouseover="this.style.background='#001f5b'" onmouseout="this.style.background='#003087'">
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <footer>
+    &copy; 2026 ORCANNUS TECHNOLOGIES &nbsp;|&nbsp;
+    <a href="/cdn-cgi/l/email-protection#e19392968480958d808f85a18e9382808f8f9492cf828e8c"><span class="__cf_email__" data-cfemail="027071756763766e636c66426d70616
